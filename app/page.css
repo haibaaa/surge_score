@@ -1,0 +1,351 @@
+/* ============================================
+   PAGE SPECIFIC STYLES
+   ============================================ */
+
+/* Navbar */
+.navbar {
+  background: white;
+  border-bottom: 1px solid #e5e7eb;
+  padding: 1rem 0;
+  box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.navbar-content {
+  max-width: 72rem;
+  margin: 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 2rem;
+}
+
+.navbar-logo {
+  display: flex;
+  align-items: center;
+  margin-left: -200;
+  padding-left: 0;
+}
+
+.navbar-button {
+  background: #1e40af;
+  color: white;
+  font-weight: 700;
+  font-size: 0.875rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 6px -1px rgba(30, 64, 175, 0.3);
+}
+
+.navbar-button:hover {
+  background: #1e3a8a;
+  box-shadow: 0 6px 8px -1px rgba(30, 64, 175, 0.4);
+  transform: translateY(-1px);
+}
+
+.navbar-button:active {
+  transform: translateY(0);
+}
+
+.logo-image {
+  height: auto;
+  width: auto;
+  object-fit: contain;
+}
+
+/* Sports Navigation */
+.sports-nav {
+  margin-bottom: 2rem;
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  padding-bottom: 1rem;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.sports-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.sport-button {
+  padding: 0.75rem 1.5rem;
+  font-weight: 700;
+  font-size: 0.875rem;
+  border-radius: 0.5rem;
+  white-space: nowrap;
+  transition: all 0.3s ease;
+  flex-shrink: 0;
+  border: 2px solid;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  font-family: inherit;
+  
+}
+
+.sport-button-active {
+  background: #1e40af;
+  color: white;
+  border-color: #1e3a8a;
+  box-shadow: 0 10px 15px -3px rgba(30, 64, 175, 0.5);
+  transform: scale(1.05);
+}
+
+.sport-button-active:hover {
+  background: #1e3a8a;
+}
+
+.sport-button-inactive {
+  background: white;
+  color: #374151;
+  border-color: #d1d5db;
+}
+
+.sport-button-inactive:hover {
+  background: #f9fafb;
+  border-color: #9ca3af;
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+/* Scoreboard Table Container */
+.scoreboard-container {
+  background: white;
+  border-radius: 0.75rem;
+  border: 2px solid #e5e7eb;
+  overflow: hidden;
+  box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+}
+
+.scoreboard-header {
+  background: #0c0c0d;
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+
+.scoreboard-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: white;
+  margin-bottom: 0.25rem;
+}
+
+.scoreboard-subtitle {
+  color: rgba(255, 255, 255, 0.8);
+  font-size: 0.875rem;
+}
+
+/* Table Styles */
+.scoreboard-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.scoreboard-table thead tr {
+  background: #f9fafb;
+  border-bottom: 2px solid #e5e7eb;
+}
+
+.scoreboard-table th {
+  padding: 1rem 1.5rem;
+  text-align: left;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: #4b5563;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.scoreboard-table th.text-right {
+  text-align: right;
+}
+
+.scoreboard-table tbody tr {
+  border-bottom: 1px solid #f3f4f6;
+  transition: background-color 0.2s ease;
+}
+
+.scoreboard-table tbody tr:hover {
+  background-color: #eff6ff;
+}
+
+.scoreboard-table td {
+  padding: 1rem 1.5rem;
+  font-size: 0.875rem;
+  color: #4b5563;
+}
+
+.scoreboard-table td.text-right {
+  text-align: right;
+}
+
+/* Match Info */
+.match-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.team-name {
+  font-weight: 600;
+  color: #111827;
+}
+
+.vs-text {
+  color: #9ca3af;
+  font-size: 0.75rem;
+}
+
+/* Winner Badge */
+.winner-badge {
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  border: 2px solid;
+}
+
+.winner-badge-draw {
+  background-color: #fef3c7;
+  color: #92400e;
+  border-color: #fcd34d;
+}
+
+.winner-badge-win {
+  background-color: #d1fae5;
+  color: #065f46;
+  border-color: #6ee7b7;
+}
+
+/* Loading State */
+.loading-container {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+  height: 2rem;
+  width: 2rem;
+  margin-bottom: 0.75rem;
+  color: #1e40af;
+}
+
+.loading-text {
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Empty State */
+.empty-state {
+  padding: 3rem 1.5rem;
+  text-align: center;
+  color: #6b7280;
+}
+
+/* Page Container */
+.page-container {
+  min-height: 100vh;
+  color: #111827;
+}
+
+.page-container .page-content {
+  padding: 2.5rem 1.5rem;
+}
+
+@media (min-width: 768px) {
+  .page-container .page-content {
+    padding: 2.5rem 2rem;
+  }
+}
+
+.page-content {
+  max-width: 72rem;
+  margin-left: auto;
+  margin-right: auto;
+  animation: fadeIn 0.5s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Hero Header */
+.hero-header {
+  text-align: left;
+  margin-bottom: 2.5rem;
+}
+
+.hero-title {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #050506;
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+@media (min-width: 768px) {
+  .hero-title {
+    font-size: 3.75rem;
+  }
+}
+
+.hero-subtitle {
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
+@media (min-width: 768px) {
+  .hero-subtitle {
+    font-size: 1.125rem;
+  }
+}
+
+/* Error Message */
+.error-message {
+  margin-bottom: 1.5rem;
+  padding: 1rem;
+  background-color: #fef2f2;
+  border: 2px solid #fecaca;
+  color: #991b1b;
+  border-radius: 0.5rem;
+  font-size: 0.875rem;
+}
+
+.error-message strong {
+  font-weight: 700;
+}
+
+/* Date Cell */
+.date-cell {
+  color: #4b5563;
+  font-size: 0.875rem;
+}
+
