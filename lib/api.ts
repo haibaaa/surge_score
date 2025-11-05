@@ -1,4 +1,4 @@
-import { getDummySports, getDummyScoresBySport } from './dummyData';
+import { getDummySports, getDummyScoresBySport, getAllDummyScores } from './dummyData';
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || '';
 
@@ -48,5 +48,28 @@ export async function fetchScoresBySport(sportName: string) {
   } catch (error) {
     console.warn(`⚠️ API fetch failed for ${sportName}, falling back to dummy data:`, error);
     return getDummyScoresBySport(sportName);
+  }
+}
+
+/**
+ * Fetches all matches from all sports
+ * Client-side function for use in React components
+ * Falls back to dummy data if API_URL is not configured
+ */
+export async function fetchAllScores() {
+  if (USE_DUMMY_DATA) {
+    console.log('📦 Using dummy data for all scores (NEXT_PUBLIC_API_URL not set)');
+    return getAllDummyScores();
+  }
+
+  try {
+    const res = await fetch(`${API_BASE_URL}/scores`, {
+      cache: 'no-store', // Always fetch fresh data on client
+    });
+    if (!res.ok) throw new Error('Failed to fetch all scores');
+    return res.json();
+  } catch (error) {
+    console.warn('⚠️ API fetch failed for all scores, falling back to dummy data:', error);
+    return getAllDummyScores();
   }
 }

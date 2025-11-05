@@ -24,12 +24,9 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en" className={`${inter.variable} font-sans`}>
-      <body className="antialiased min-h-screen bg-white text-gray-900 relative">
-        {/* Subtle animated background gradient */}
-        <div className="fixed inset-0 -z-10 bg-blue-50 opacity-50"></div>
-        
-        <main className="relative z-10">{children}</main>
+    <html lang="en" className={inter.variable} suppressHydrationWarning>
+      <body className="antialiased bg-black text-white font-sans">
+        {children}
       </body>
     </html>
   );
