@@ -1,12 +1,9 @@
 "use client";
-
 import React, { useState, useEffect } from "react";
 import { fetchSports, fetchScoresBySport, fetchAllScores } from "@/lib/api";
 import "./page.css";
 import Image from "next/image";
-
 // --------------------- CHILD COMPONENTS ---------------------
-
 function Navbar({ onAllMatchesClick, isAllMatchesActive, onHomeClick }) {
   return (
     <nav className="navbar">
@@ -21,14 +18,14 @@ function Navbar({ onAllMatchesClick, isAllMatchesActive, onHomeClick }) {
           />
         </div>
         <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
-          <button 
+          <button
             className="navbar-button navbar-button-small"
             onClick={onHomeClick}
             aria-label="Go to Home"
           >
             Home
           </button>
-          <button 
+          <button
             className={`navbar-button ${isAllMatchesActive ? 'navbar-button-active' : ''}`}
             onClick={onAllMatchesClick}
           >
@@ -39,7 +36,6 @@ function Navbar({ onAllMatchesClick, isAllMatchesActive, onHomeClick }) {
     </nav>
   );
 }
-
 function SportsNav({ sports, activeSport, onSelectSport, isLoading }) {
   if (isLoading) {
     return (
@@ -58,11 +54,9 @@ function SportsNav({ sports, activeSport, onSelectSport, isLoading }) {
       </>
     );
   }
-
   const handleDropdownChange = (e) => {
     onSelectSport(e.target.value);
   };
-
   return (
     <>
       {/* Desktop: Button Navigation */}
@@ -81,7 +75,6 @@ function SportsNav({ sports, activeSport, onSelectSport, isLoading }) {
           </button>
         ))}
       </div>
-
       {/* Mobile: Dropdown Navigation */}
       <div className="sports-dropdown">
         <select
@@ -99,7 +92,6 @@ function SportsNav({ sports, activeSport, onSelectSport, isLoading }) {
     </>
   );
 }
-
 function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
   return (
     <div className="scoreboard-container">
@@ -109,12 +101,12 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
         </h2>
         <p className="scoreboard-subtitle"></p>
       </div>
-
       {/* Desktop Table View */}
       <div className="scoreboard-table-wrapper">
         <table className="scoreboard-table">
           <thead>
             <tr>
+              <th>TIME</th>
               <th>DATE</th>
               <th>COMPETING</th>
               <th>MATCH TYPE</th>
@@ -122,11 +114,10 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
               <th className="text-right">WINNER</th>
             </tr>
           </thead>
-
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={5}>
+                <td colSpan={6}>
                   <div className="loading-container">
                     <svg
                       className="loading-spinner"
@@ -154,6 +145,7 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
             ) : scores.length > 0 ? (
               scores.map((match) => (
                 <tr key={showAllMatches ? `${match.sport}-${match.id}` : match.id}>
+                  <td className="time-cell">{match.startTime || ''}</td>
                   <td className="date-cell">{match.date}</td>
                   <td>
                     <div className="match-info">
@@ -182,7 +174,7 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
               ))
             ) : (
               <tr>
-                <td colSpan={5}>
+                <td colSpan={6}>
                   <p className="empty-state">
                     {showAllMatches ? "No matches available yet." : `No results available for ${sportName} yet.`}
                   </p>
@@ -192,7 +184,6 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
           </tbody>
         </table>
       </div>
-
       {/* Mobile Card View */}
       <div className="scoreboard-cards">
         {isLoading ? (
@@ -223,6 +214,7 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
             <div key={showAllMatches ? `${match.sport}-${match.id}` : match.id} className="score-card">
               <div className="score-card-header">
                 <div className="score-card-date">
+                  <span className="score-card-time">{match.startTime || ''}</span>
                   <span>{match.date}</span>
                   <span
                     className={`winner-badge ${
@@ -268,9 +260,7 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
     </div>
   );
 }
-
 // --------------------- MAIN PAGE ---------------------
-
 export default function HomePage() {
   const [sportsList, setSportsList] = useState([]);
   const [scores, setScores] = useState([]);
@@ -279,7 +269,6 @@ export default function HomePage() {
   const [isLoadingScores, setIsLoadingScores] = useState(false);
   const [error, setError] = useState(null);
   const [showAllMatches, setShowAllMatches] = useState(false);
-
   useEffect(() => {
     const loadSports = async () => {
       try {
@@ -295,7 +284,6 @@ export default function HomePage() {
     };
     loadSports();
   }, []);
-
   useEffect(() => {
     if (showAllMatches) {
       const loadAllScores = async () => {
@@ -331,17 +319,14 @@ export default function HomePage() {
       loadScores();
     }
   }, [selectedSport, showAllMatches]);
-
   const handleAllMatchesClick = () => {
     setShowAllMatches(true);
     setSelectedSport(null);
   };
-
   const handleSportSelect = (sport) => {
     setShowAllMatches(false);
     setSelectedSport(sport);
   };
-
   const handleHomeClick = () => {
     setShowAllMatches(false);
     // if there's no selected sport yet, default to first sport when available
@@ -349,10 +334,9 @@ export default function HomePage() {
       setSelectedSport(sportsList[0]);
     }
   };
-
   return (
     <div className="page-container">
-      <Navbar 
+      <Navbar
         onAllMatchesClick={handleAllMatchesClick}
         isAllMatchesActive={showAllMatches}
         onHomeClick={handleHomeClick}
@@ -363,16 +347,14 @@ export default function HomePage() {
           <h1 className="hero-title">
             Scoreboard
           </h1>
-        
+       
         </div>
-
         {/* Error */}
         {error && (
           <div className="error-message">
             <strong>Error:</strong> {error}
           </div>
         )}
-
         {/* Sports Nav - Hide when showing all matches */}
         {!showAllMatches && (
           <SportsNav
@@ -382,7 +364,6 @@ export default function HomePage() {
             isLoading={isLoadingSports}
           />
         )}
-
         {/* Scoreboard */}
         <ScoreboardTable
           scores={scores}
