@@ -1,8 +1,28 @@
+// page.tsx
 "use client";
 import React, { useState, useEffect } from "react";
-import { fetchSports, fetchScoresBySport, fetchAllScores } from "@/lib/api";
+import { fetchScoresBySport, fetchAllScores } from "@/lib/api";
 import "./page.css";
 import Image from "next/image";
+
+// Hardcoded sports list (lowercase to match how you use sport strings elsewhere)
+const HARDCODED_SPORTS = [
+    "Badminton (Women)",
+    "Badminton men",
+    "Basketball Men",
+    "Basketball Women",
+    "Chess",
+    "Football",
+    "Futsal",
+    "Pool",
+    "Squash",
+    "Table Tennis Men",
+    "Table Tennis Women",
+    "Tennis",
+    "Volleyball Men",
+    "Volleyball Women"
+]
+
 // --------------------- CHILD COMPONENTS ---------------------
 function Navbar({ onAllMatchesClick, isAllMatchesActive, onHomeClick }) {
   return (
@@ -262,28 +282,15 @@ function ScoreboardTable({ scores, sportName, isLoading, showAllMatches }) {
 }
 // --------------------- MAIN PAGE ---------------------
 export default function HomePage() {
-  const [sportsList, setSportsList] = useState([]);
+  // initialize with hardcoded list
+  const [sportsList] = useState(HARDCODED_SPORTS);
   const [scores, setScores] = useState([]);
-  const [selectedSport, setSelectedSport] = useState(null);
-  const [isLoadingSports, setIsLoadingSports] = useState(true);
+  const [selectedSport, setSelectedSport] = useState(HARDCODED_SPORTS[0] || null);
+  const [isLoadingSports] = useState(false); // no fetch step, so always false
   const [isLoadingScores, setIsLoadingScores] = useState(false);
   const [error, setError] = useState(null);
   const [showAllMatches, setShowAllMatches] = useState(false);
-  useEffect(() => {
-    const loadSports = async () => {
-      try {
-        const sports = await fetchSports();
-        setSportsList(sports);
-        if (sports.length > 0) setSelectedSport(sports[0]);
-      } catch (err) {
-        setError("Failed to load sports. Please refresh.");
-        console.error(err);
-      } finally {
-        setIsLoadingSports(false);
-      }
-    };
-    loadSports();
-  }, []);
+
   useEffect(() => {
     if (showAllMatches) {
       const loadAllScores = async () => {
@@ -319,6 +326,7 @@ export default function HomePage() {
       loadScores();
     }
   }, [selectedSport, showAllMatches]);
+
   const handleAllMatchesClick = () => {
     setShowAllMatches(true);
     setSelectedSport(null);
@@ -329,11 +337,12 @@ export default function HomePage() {
   };
   const handleHomeClick = () => {
     setShowAllMatches(false);
-    // if there's no selected sport yet, default to first sport when available
+    // if there's no selected sport yet, default to first sport
     if (!selectedSport && sportsList && sportsList.length > 0) {
       setSelectedSport(sportsList[0]);
     }
   };
+
   return (
     <div className="page-container">
       <Navbar
@@ -347,7 +356,6 @@ export default function HomePage() {
           <h1 className="hero-title">
             Scoreboard
           </h1>
-       
         </div>
         {/* Error */}
         {error && (
